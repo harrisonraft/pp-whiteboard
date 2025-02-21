@@ -5,6 +5,6 @@ export const App = () => {
     // this is the main 'smart' component, can connect things here!
 
     return (
-        <WhiteboardCanvas />
+        <WhiteboardCanvas width={1000} height={600} />
     )
 }

@@ -4,8 +4,6 @@ import commonjs from "@rollup/plugin-commonjs";
 import replace from "@rollup/plugin-replace";
 import postcss from "rollup-plugin-postcss";
 import copy from "rollup-plugin-copy";
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
 
 export default {
     input: 'src/index.tsx',
@@ -22,9 +20,14 @@ export default {
                 'process.env.NODE_ENV': JSON.stringify('development')
             }
         }),
+        typescript({
+            tsconfig: "tsconfig.json",
+            compilerOptions: {
+                jsx: "react"
+            }
+        }),
         resolve(),
         commonjs(),
-        typescript(),
         postcss({
             extract: 'index.css',
             modules: false,
