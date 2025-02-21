@@ -1,4 +1,4 @@
-import { BehaviorSubject, Observable } from "rxjs";
+import { Subject, Observable } from "rxjs";
 import { ScribbleElement, WHITEBOARD_ELEMENT_TYPES } from "../types/WhiteboardElement.type";
 
 // IN PLACE OF EXISTING SERVER (next week)
@@ -17,6 +17,8 @@ const element: ScribbleElement = {
     ]
 };
 
+function thing() {}
+
 const message = {
     type: "initialise",
     elements: [element]
@@ -24,11 +26,15 @@ const message = {
 
 class ConnectionService {
     public serverEvents$: Observable<string>;
-    private _serverEventsSubject: BehaviorSubject<string>;
+    private _serverEventsSubject: Subject<string>;
 
     constructor() {
-        this._serverEventsSubject = new BehaviorSubject<string>(JSON.stringify(message));
+        this._serverEventsSubject = new Subject<string>();
         this.serverEvents$ = this._serverEventsSubject.asObservable();
+
+        setTimeout(() => {
+            this._serverEventsSubject.next(JSON.stringify(message));
+        }, 5000);
     }
 }
 
