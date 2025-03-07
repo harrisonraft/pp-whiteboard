@@ -7,6 +7,33 @@ const PORT = process.env.PORT || 8080;
 
 const wss = new WebSocketServer({server});
 
+wss.on('connection', (ws: WebSocket) => {
+    console.log("CLIENT CONNECTED");
+    connections.push(ws);
+
+    ws.send(JSON.stringify({ type: "initialise", elements: serverElements}));
+
+    ws.on('message', (message) => {
+        const data = JSON.parse(message.toString());
+        if (isAddElement(data)) {
+            serverElements.push(data.element);
+            updateAllConnections();
+        }
+    });
+
+    ws.on("close", () => {
+        console.log("client removed");
+        connections.splice(connections.indexOf(ws), 1);
+    });
+});
+
+server.listen(PORT, () => {
+    console.log(`WebSocket server is running on port ${PORT}`);
+});
+
+
+/// https://www.youtube.com/watch?v=lXMskKTw3Bc
+
 const serverElements: Array<WhiteboardElement> = [
     {
         id: 'scribble-1',
@@ -28,7 +55,7 @@ const connections: Array<WebSocket> = [];
 type ClientMessageAddElement = { type: "addElement", element: WhiteboardElement };
 type ClientMessage = (
     | ClientMessageAddElement
-)
+    )
 
 function isAddElement(data: any): data is ClientMessageAddElement {
     return typeof data === "object" && !Array.isArray(data) && data.type === "addElement" && data.element !== undefined
@@ -39,26 +66,3 @@ function updateAllConnections() {
         ws.send(JSON.stringify({ type: "update", elements: serverElements}));
     }
 }
-
-wss.on('connection', (ws: WebSocket) => {
-    console.log("CLIENT CONNECTED");
-    connections.push(ws);
-
-    ws.send(JSON.stringify({ type: "initialise", elements: serverElements}));
-
-    ws.on('message', (message) => {
-        const data = JSON.parse(message.toString());
-        if (isAddElement(data)) {
-            serverElements.push(data.element);
-            updateAllConnections();
-        }
-    });
-
-    ws.on("close", () => {
-        connections.splice(connections.indexOf(ws), 1);
-    });
-});
-
-server.listen(PORT, () => {
-    console.log(`WebSocket server is running on port ${PORT}`);
-});

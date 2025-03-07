@@ -26,15 +26,14 @@ class EventsService {
         this.events$ = this.eventsSubject.asObservable();
 
         const connectionSub = connectionService.serverEvents$.subscribe((message: string) => {
-                const parsedMessage = JSON.parse(message);
+            const parsedMessage = JSON.parse(message);
 
-                if (this.isServerMessage(parsedMessage)) {
-                    this.eventsSubject.next(parsedMessage.elements);
-                } else {
-                    //Throw
-                }
+            if (this.isServerMessage(parsedMessage)) {
+                this.eventsSubject.next(parsedMessage.elements);
+            } else {
+                //Throw
             }
-        )
+        })
     }
 
     private isServerMessage(message: Record<string, any>): message is ServerMessage {

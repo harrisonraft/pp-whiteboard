@@ -1,6 +1,7 @@
 import {Observable, Subject} from "rxjs";
 import {eventsService} from "../events-service/events-service";
 import {WhiteboardElement} from "../types/WhiteboardElement.type";
+import { connectionService } from "../connection-service/connection-service";
 
 type StoreMessage = {
     type: "add" | "remove" | "update";
@@ -41,6 +42,18 @@ class BigFatMemeStore {
                 });
             }
         });
+    }
+
+    public add(element: WhiteboardElement): void {
+        this.model.push(element);
+
+        this.changesSubject.next({
+            type: "add",
+            element: element
+        });
+
+        connectionService.addElement(element);
+        // connectionService.addElement(element);
     }
 }
 
