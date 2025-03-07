@@ -7,6 +7,11 @@ type StoreMessage = {
     element: WhiteboardElement;
 }
 
+/* TODO 7th March
+    - need to have some way of pushing to the store, instead of just pulling from events
+    - this also needs to communicate to the connection service and send those back to the API
+ */
+
 class BigFatMemeStore {
     /**
      * - Holds FE model in its entirety

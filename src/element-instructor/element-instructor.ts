@@ -1,6 +1,6 @@
-import { Observable, BehaviorSubject, Subject } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { RenderingInstruction } from "./types/RenderingInstruction.type";
-import { ScribbleElement, WHITEBOARD_ELEMENT_TYPES, WhiteboardElement } from "../types/WhiteboardElement.type";
+import { ScribbleElement, WhiteboardElement } from "../types/WhiteboardElement.type";
 import { bigFatMemeStore } from "../big-fat-meme-store/big-fat-meme-store";
 
 /**
