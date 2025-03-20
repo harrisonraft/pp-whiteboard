@@ -13,7 +13,7 @@ class ConnectionService {
     }
 
     private _connect() {
-        this._websocket = new WebSocket("ws://localhost:8080");
+        this._websocket = new WebSocket(process.env.WS_URL || "ws://localhost:8080");
         this._websocket.addEventListener("message", (message) => {
             console.log(message);
             this._serverEventsSubject.next(message.data);

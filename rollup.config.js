@@ -19,7 +19,8 @@ const clientConfig = {
         replace({
             preventAssignment: true,
             values: {
-                'process.env.NODE_ENV': JSON.stringify('development')
+                'process.env.NODE_ENV': JSON.stringify('development'),
+                'process.env.WS_URL': JSON.stringify(process.env.WS_URL)
             }
         }),
         typescript({
