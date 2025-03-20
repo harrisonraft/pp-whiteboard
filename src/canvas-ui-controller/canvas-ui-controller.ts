@@ -80,8 +80,9 @@ export class CanvasUiController {
 
         const nextPoint = { x: absXY.x - initialX, y: absXY.y - initialY };
 
+        // Stop duplicate points, untested
         // const lastPoint = this.currentDrawing.at(-1);
-        // if (nextPoint.x === lastPoint.x && nextPoint.y === lastPoint.y) {
+        // if (nextPoint.x === lastPoint!.x && nextPoint.y === lastPoint!.y) {
         //      return;
         // }
 

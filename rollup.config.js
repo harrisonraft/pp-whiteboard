@@ -4,6 +4,7 @@ import commonjs from "@rollup/plugin-commonjs";
 import replace from "@rollup/plugin-replace";
 import postcss from "rollup-plugin-postcss";
 import copy from "rollup-plugin-copy";
+import babel from '@rollup/plugin-babel';
 
 // Client build configuration
 const clientConfig = {
@@ -23,11 +24,18 @@ const clientConfig = {
         }),
         typescript({
             tsconfig: "tsconfig.json",
-            compilerOptions: {
-                jsx: "react"
-            }
+            jsx: "preserve"
         }),
-        resolve(),
+        babel({
+            babelHelpers: 'bundled',
+            extensions: ['.js', '.jsx', '.ts', '.tsx'],
+            presets: [
+                '@babel/preset-react'
+            ]
+        }),
+        resolve({
+            extensions: ['.js', '.jsx', '.ts', '.tsx']
+        }),
         commonjs(),
         postcss({
             extract: 'index.css',
